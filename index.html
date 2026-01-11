@@ -4,208 +4,181 @@
 <meta charset="UTF-8">
 <title>❤️ Lipsy, Happy Valentine’s ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  min-height: 100vh;
-  background: radial-gradient(circle at left, #1a0005 0%, #000 55%), linear-gradient(120deg, #000, #2b0009);
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
-  font-family: 'Poppins', sans-serif; color: #fff; position: relative;
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  min-height:100vh;
+  overflow:hidden;
+  background:radial-gradient(circle at left,#1a0005,#000);
+  font-family:'Poppins',sans-serif;
+  color:#fff;
+  position:relative;
 }
 
-/* Roses / petals */
-.roses {
-  position: absolute; right: -10%; top: 0; width: 60%; height: 100%;
-  background: radial-gradient(circle at center, rgba(255,0,50,0.35), transparent 60%),
-              repeating-linear-gradient(45deg, rgba(180,0,40,0.15) 0, rgba(180,0,40,0.15) 10px, rgba(120,0,30,0.15) 10px, rgba(120,0,30,0.15) 20px);
-  filter: blur(0.3px); animation: rosesMove 20s ease-in-out infinite alternate;
-  z-index: 0;
+/* PETALS */
+.petal{
+  position:absolute;
+  width:20px;height:20px;
+  background:url('https://i.ibb.co/ypqVJm6/petal.png') no-repeat center;
+  background-size:contain;
+  pointer-events:none;
+  animation:fall linear infinite;
+  z-index:1;
 }
-@keyframes rosesMove { from { transform: translateX(0); } to { transform: translateX(-40px); } }
-
-/* Falling petals */
-.petal {
-  position: absolute;
-  width: 20px; height: 20px;
-  background: url('https://i.ibb.co/ypqVJm6/petal.png') no-repeat center;
-  background-size: contain;
-  pointer-events: none;
-  animation: fall linear infinite;
-  z-index: 1;
-}
-@keyframes fall { 
-  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 
-  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } 
+@keyframes fall{
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(360deg);opacity:0;}
 }
 
-/* Candle flicker */
-.candle {
-  position: absolute; bottom: 20px; left: 50%;
-  width: 20px; height: 50px; margin-left: -10px;
-  background: radial-gradient(circle at top, #ffb347, #ff4b2b);
-  border-radius: 50% 50% 0 0;
-  box-shadow: 0 0 20px #ff9a5c;
-  animation: flicker 1s infinite;
-  z-index: 2;
+/* CARD */
+.card{
+  position:relative;
+  max-width:520px;width:90%;padding:50px;
+  background:linear-gradient(180deg,#0b0b0b,#1a0005);
+  border-radius:26px;
+  box-shadow:0 40px 90px rgba(0,0,0,0.7);
+  text-align:center;
+  display:none;
+  z-index:3;
+  opacity:0;
+  transition:opacity 0.8s;
 }
-@keyframes flicker { 0%,100%{opacity:0.85; transform:scaleY(1);}50%{opacity:1; transform:scaleY(1.1);} }
+.card.show{display:block;opacity:1;}
 
-/* Main card */
-.card {
-  position: relative; z-index: 3;
-  max-width: 520px; width: 92%; padding: 70px 55px;
-  background: linear-gradient(180deg, #0b0b0b, #1a0005);
-  border-radius: 26px; box-shadow: 0 40px 90px rgba(0,0,0,0.7);
-  text-align: left; animation: cardIn 1.1s ease; overflow: hidden;
+.card h1{font-family:'Playfair Display',serif;font-size:2.5rem;margin-bottom:15px;}
+.card p{font-size:1rem;color:#e5c7cc;margin-bottom:25px;line-height:1.6;}
+.card button{
+  padding:12px 30px;
+  border:none;border-radius:50px;
+  font-size:1rem;cursor:pointer;
+  background:linear-gradient(45deg,#ff4ecd,#ff9de2);
+  color:#fff;
+  box-shadow:0 0 25px #ff4ecd;
 }
-@keyframes cardIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+.card button:hover{transform:translateY(-3px);box-shadow:0 0 35px #ff4ecd;}
 
-/* Gold accent border */
-.card::before {
-  content: "";
-  position: absolute; inset: 0;
-  border-radius: 26px; padding: 2px;
-  background: linear-gradient(120deg, #b88a44, #ffd27d, #b88a44);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
+/* VALENTINE SHIMMER */
+.valentine-text{
+  background:linear-gradient(90deg,#ffd700,#fffacd,#ffd700);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 2s infinite linear;
 }
+@keyframes shimmer{0%{background-position:-200px;}100%{background-position:200px;}}
 
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem; margin-bottom: 20px; color: #fff; letter-spacing: 1px;
+/* RING */
+.ring{
+  position:absolute;top:20px;left:50%;
+  width:100px;height:100px;margin-left:-50px;
+  border:4px solid gold;border-radius:50%;
+  box-shadow:0 0 20px gold;
+  animation:ringSpin 2s linear infinite, ringScale 1s ease-in-out infinite alternate;
+  opacity:0;z-index:4;
 }
-p {
-  font-size: 1.05rem; color: #e5c7cc; margin-bottom: 36px; line-height: 1.7; max-width: 420px;
-}
-button {
-  border: none; padding: 14px 38px; border-radius: 30px;
-  font-size: 0.95rem; cursor: pointer;
-  background: linear-gradient(135deg, #b0002a, #ff3b5c);
-  color: white; letter-spacing: 1px;
-  box-shadow: 0 14px 36px rgba(255,60,90,0.45); transition: all 0.35s ease;
-}
-button:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(255,60,90,0.65); }
+.ring.show{opacity:1;}
+@keyframes ringSpin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+@keyframes ringScale{0%{transform:scale(0.8);}100%{transform:scale(1.2);}}
 
-/* Ring animation */
-.ring {
-  position: absolute; top: 20px; left: 50%; width: 100px; height: 100px;
-  margin-left: -50px; border: 4px solid gold; border-radius: 50%;
-  box-shadow: 0 0 20px gold; animation: ringSpin 2s linear infinite, ringScale 1s ease-in-out infinite alternate;
-  opacity: 0; transition: opacity 0.5s; z-index: 4;
-}
-.ring.show { opacity: 1; }
-@keyframes ringSpin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
-@keyframes ringScale { 0%{transform:scale(0.8);}100%{transform:scale(1.2);} }
+/* FIREWORKS */
+canvas{position:absolute;inset:0;z-index:0;}
 
-/* Shimmer text for Valentine’s Day */
-.valentine-text {
-  background: linear-gradient(90deg, #ffd700, #fffacd, #ffd700);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  animation: shimmer 2s infinite linear;
+/* HEARTS */
+.heart{
+  position:absolute;
+  font-size:20px;
+  animation:floatUp linear infinite;
 }
-@keyframes shimmer { 0%{background-position:-200px;}100%{background-position:200px;} }
-
-/* Envelope intro */
-.envelope {
-  width: 120px; height: 80px; background: #fff; border: 2px solid #ffd27d;
-  border-radius: 8px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  overflow: hidden; z-index: 5; perspective: 600px;
-}
-.flap {
-  width: 120px; height: 40px; background: #ffd27d; position: absolute; top:0;
-  transform-origin: top center;
-  transform-style: preserve-3d;
-  animation: flapOpen 1s forwards;
-}
-@keyframes flapOpen { 0% { transform: rotateX(0deg);} 100% { transform: rotateX(-180deg);} }
-
+@keyframes floatUp{0%{transform:translateY(100vh)}100%{transform:translateY(-10vh);opacity:0}}
 </style>
 </head>
+
 <body>
-
-<div class="roses"></div>
+<canvas id="fireworks"></canvas>
 <div id="petals"></div>
-<div class="candle"></div>
 <div class="ring"></div>
-
-<!-- Envelope intro -->
-<div class="envelope" id="envelope">
-  <div class="flap"></div>
-</div>
-
-<!-- Audio -->
+<div class="card" id="card"></div>
 <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
-<!-- Card -->
-<div class="card" id="card" style="display:none;"></div>
-
 <script>
+// CARDS DATA
 const cards = [
-  { title: 'Happy Valentine’s, Lipsy', msg: 'This little space is just to tell you how special you are. Thank you for being the warmth in my thoughts and the smile I look forward to.' },
-  { title: '🌹 Rose Day', msg: 'Every rose reminds me that beauty doesn’t need to be loud. It just needs to be real — like you.' },
-  { title: '💍 Propose Day', msg: 'If moments could turn into promises, I’d choose you without hesitation.' },
-  { title: '🍫 Chocolate Day', msg: 'Sweet things make life better, but they’re even sweeter when shared.' },
-  { title: '🧸 Teddy Day', msg: 'Here’s a soft hug in words, wrapped in comfort and care.' },
-  { title: '🤞 Promise Day', msg: 'I promise sincerity, patience, and respect — always.' },
-  { title: '🤗 Hug Day', msg: 'Close your eyes. This one’s warm, quiet, and meant only for you.' },
-  { title: '💋 Kiss Day', msg: 'Some feelings are best expressed softly, without words.' },
-  { title: '❤️ Valentine’s Day', msg: 'Lipsy, thank you for existing and for making the world feel gentler. Happy Valentine’s Day.' }
+  { title:'Happy Valentine’s, Lipsy', msg:'This little space is just to tell you how special you are. Thank you for being the warmth in my thoughts and the smile I look forward to.' },
+  { title:'🌹 Rose Day', msg:'Every rose reminds me that beauty doesn’t need to be loud. It just needs to be real — like you.' },
+  { title:'💍 Propose Day', msg:'If moments could turn into promises, I’d choose you without hesitation.' },
+  { title:'🍫 Chocolate Day', msg:'Sweet things make life better, but they’re even sweeter when shared.' },
+  { title:'🧸 Teddy Day', msg:'Here’s a soft hug in words, wrapped in comfort and care.' },
+  { title:'🤞 Promise Day', msg:'I promise sincerity, patience, and respect — always.' },
+  { title:'🤗 Hug Day', msg:'Close your eyes. This one’s warm, quiet, and meant only for you.' },
+  { title:'💋 Kiss Day', msg:'Some feelings are best expressed softly, without words.' },
+  { title:'❤️ Valentine’s Day', msg:'Lipsy, thank you for existing and for making the world feel gentler. Happy Valentine’s Day.' }
 ];
 
-let index = 0, started = false;
-const card = document.getElementById('card');
-const ring = document.querySelector('.ring');
-const audio = document.getElementById('audio');
+let index=0, started=false;
+const card=document.getElementById('card');
+const ring=document.querySelector('.ring');
+const audio=document.getElementById('audio');
 
-// Falling petals generator
-function createPetals(count=30){
+// CREATE PETALS
+function createPetals(count=40){
   for(let i=0;i<count;i++){
-    const petal = document.createElement('div');
-    petal.classList.add('petal');
-    petal.style.left = Math.random()*100+'vw';
-    petal.style.animationDuration = (5+Math.random()*5)+'s';
-    petal.style.animationDelay = Math.random()*5+'s';
-    document.getElementById('petals').appendChild(petal);
+    const p=document.createElement('div');
+    p.className='petal';
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(5+Math.random()*5)+'s';
+    p.style.animationDelay=Math.random()*5+'s';
+    p.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.getElementById('petals').appendChild(p);
   }
 }
 
-// Render card content
+// FLOATING HEARTS
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='❤️';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(4+Math.random()*3)+'s';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7000);
+},400);
+
+// FIREWORKS
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+canvas.width=innerWidth;canvas.height=innerHeight;
+let parts=[];
+function explode(x,y){for(let i=0;i<90;i++){parts.push({x,y,a:Math.random()*6.28,s:Math.random()*5+2,l:90});}}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);parts.forEach((p,i)=>{p.x+=Math.cos(p.a)*p.s;p.y+=Math.sin(p.a)*p.s;p.l--;ctx.fillStyle='rgba(255,120,200,0.9)';ctx.fillRect(p.x,p.y,3,3);if(p.l<=0)parts.splice(i,1);});requestAnimationFrame(animate);}
+animate();
+
+// RENDER CARD
 function render(){
-  const c = cards[index];
-  const titleClass = c.title.includes("Valentine") ? 'valentine-text' : '';
-  card.innerHTML = `
-    <h1 class="${titleClass}">${c.title}</h1>
-    <p>${c.msg}</p>
-    <button onclick="next()">Continue</button>
-  `;
-  
-  // Show ring only on Propose Day
-  if(c.title.includes("Propose")) ring.classList.add('show');
+  const c=cards[index];
+  const titleClass=c.title.includes("Valentine")?'valentine-text':'';
+  card.innerHTML=`<h1 class="${titleClass}">${c.title}</h1><p>${c.msg}</p><button onclick="nextCard()">Continue</button>`;
+  card.classList.add('show');
+  // RING FOR PROPOSE DAY
+  if(c.title.includes('Propose')) ring.classList.add('show');
   else ring.classList.remove('show');
 }
 
-// Next card
-function next(){
-  if(!started){
-    audio.play();  // Play audio on first interaction
-    started = true;
-  }
+// NEXT CARD
+function nextCard(){
+  if(!started){audio.play();started=true;}
   index++;
   if(index<cards.length) render();
-  else card.innerHTML=`<h1>💘 With Love</h1><p>Thank you for taking this journey, Lipsy.</p>`;
+  else card.innerHTML='<h1>💘 With Love</h1><p>Thank you for taking this journey, Lipsy.</p>';
 }
 
-// Envelope intro animation
-window.onload = ()=>{
-  createPetals(30);
-  setTimeout(()=>{
-    document.getElementById('envelope').style.display='none';
-    card.style.display='block';
-    render();
-  },1500); // wait 1.5s for flap animation
-}
+// START
+window.onload=()=>{
+  createPetals(50);
+  setInterval(()=>explode(Math.random()*canvas.width,Math.random()*canvas.height/2),900);
+  render();
+};
+
+window.onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight;};
 </script>
 </body>
 </html>
