@@ -30,13 +30,15 @@ body{
 
 /* 🌹 Rose petals */
 .petal{
-  position:absolute;
+  position:fixed;          /* important */
+  top:-40px;               /* start above the screen */
   width:18px;
   height:18px;
   background:radial-gradient(circle,#ff9aa2,#ff4d6d);
   border-radius:50% 50% 50% 0;
   transform:rotate(45deg);
   opacity:.8;
+  pointer-events:none;
   animation:fall linear infinite;
 }
 @keyframes fall{
