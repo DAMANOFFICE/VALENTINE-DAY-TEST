@@ -12,16 +12,39 @@
 
 body{
   min-height:100vh;
-  background:radial-gradient(circle at top,#4a001d,#000 75%);
+  background:radial-gradient(circle at center,#4a001d,#000 70%);
   display:flex;
   align-items:center;
   justify-content:center;
   font-family:'Poppins',sans-serif;
   overflow:hidden;
   color:#fff;
+  animation:heartbeat 4s infinite;
 }
 
-/* Envelope */
+/* 💓 Heartbeat background */
+@keyframes heartbeat{
+  0%,100%{background-size:100% 100%}
+  50%{background-size:110% 110%}
+}
+
+/* 🌹 Rose petals */
+.petal{
+  position:absolute;
+  width:18px;
+  height:18px;
+  background:radial-gradient(circle,#ff9aa2,#ff4d6d);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  opacity:.8;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-10vh) rotate(0deg)}
+  to{transform:translateY(110vh) rotate(360deg)}
+}
+
+/* ✉️ Envelope */
 .envelope{
   width:160px;
   height:105px;
@@ -56,24 +79,29 @@ body{
   transform:rotateX(-180deg);
 }
 
-/* Card container */
+/* 💌 Card area */
 .card-stack{
   display:none;
   width:90%;
   max-width:520px;
+  text-align:center;
+  perspective:1000px;
 }
 
-/* Card */
 .card{
   background:linear-gradient(180deg,#1c000a,#3a0018);
   border-radius:30px;
   padding:60px 40px;
-  text-align:center;
-  min-height:340px;
+  min-height:330px;
   box-shadow:0 30px 80px rgba(0,0,0,.8);
+  animation:slideIn .5s ease;
+}
+@keyframes slideIn{
+  from{opacity:0;transform:translateX(80px) rotateY(-10deg)}
+  to{opacity:1;transform:translateX(0)}
 }
 
-/* Ring */
+/* 💍 Ring */
 .ring{
   width:90px;
   height:90px;
@@ -84,7 +112,7 @@ body{
   box-shadow:0 0 25px gold;
 }
 
-/* Text */
+/* ✨ Text */
 h1{
   font-family:'Playfair Display',serif;
   font-size:2.3rem;
@@ -99,18 +127,28 @@ p{
   font-size:1.05rem;
   line-height:1.7;
   color:#ffd9e1;
-  margin-bottom:30px;
 }
 
-/* Button */
-button{
-  padding:14px 44px;
-  border-radius:50px;
-  border:none;
-  background:linear-gradient(135deg,#ff4d6d,#ff8fab);
-  color:#fff;
-  font-size:1rem;
-  cursor:pointer;
+/* 📊 Progress dots */
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:25px;
+}
+.dot{
+  width:10px;
+  height:10px;
+  background:#ff8fab55;
+  border-radius:50%;
+}
+.dot.active{
+  background:#ff4d6d;
+}
+.counter{
+  margin-top:10px;
+  font-size:.85rem;
+  color:#ffb3c6;
 }
 </style>
 </head>
@@ -125,69 +163,94 @@ button{
 <!-- Card -->
 <div class="card-stack" id="stack">
   <div class="card" id="card"></div>
+  <div class="dots" id="dots"></div>
+  <div class="counter" id="counter"></div>
 </div>
 
-<!-- Audio (SAFE METHOD) -->
-<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+<!-- 🎵 YouTube audio -->
+<iframe id="yt"
+src="https://www.youtube.com/embed/2ZVX075EWnA?enablejsapi=1&autoplay=0&mute=1"
+allow="autoplay"
+style="display:none"></iframe>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-  const cards = [
-    {t:"Happy Valentine’s, Lipsy",m:"This little space exists just to remind you how special you are."},
-    {t:"🌹 Rose Day",m:"Every rose feels warmer when I think of you."},
-    {t:"💍 Propose Day",m:"If feelings could become promises, mine would always choose you."},
-    {t:"🍫 Chocolate Day",m:"Sweet moments feel sweeter when shared with you."},
-    {t:"🧸 Teddy Day",m:"Here’s a soft hug wrapped just for you."},
-    {t:"🤞 Promise Day",m:"I promise honesty, patience, and care — always."},
-    {t:"🤗 Hug Day",m:"Close your eyes… feel this hug."},
-    {t:"💋 Kiss Day",m:"Some feelings don’t need words."},
-    {t:"❤️ Valentine’s Day",m:"Lipsy, thank you for making life gentler."}
-  ];
+const cards=[
+ {t:"Happy Valentine’s, Lipsy",m:"This little space exists just to remind you how special you are."},
+ {t:"🌹 Rose Day",m:"Every rose feels warmer when I think of you."},
+ {t:"💍 Propose Day",m:"If feelings could become promises, mine would always choose you."},
+ {t:"🍫 Chocolate Day",m:"Sweet moments feel sweeter when shared with you."},
+ {t:"🧸 Teddy Day",m:"Here’s a soft hug wrapped just for you."},
+ {t:"🤞 Promise Day",m:"I promise honesty, patience, and care — always."},
+ {t:"🤗 Hug Day",m:"Close your eyes… feel this hug."},
+ {t:"💋 Kiss Day",m:"Some feelings don’t need words."},
+ {t:"❤️ Valentine’s Day",m:"Lipsy, thank you for making life gentler."}
+];
 
-  let index = 0;
-  const card = document.getElementById("card");
-  const stack = document.getElementById("stack");
-  const music = document.getElementById("music");
+let index=0;
+const card=document.getElementById("card");
+const dots=document.getElementById("dots");
+const counter=document.getElementById("counter");
+const yt=document.getElementById("yt").contentWindow;
 
-  function render(){
-    const c = cards[index];
-    card.innerHTML = `
-      <div class="ring" id="ring"></div>
-      <h1 class="${c.t.includes("Valentine")?'valentine':''}">${c.t}</h1>
-      <p>${c.m}</p>
-      <button id="nextBtn">Next</button>
-    `;
+/* 🌹 Petals generator */
+setInterval(()=>{
+  const p=document.createElement("div");
+  p.className="petal";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=6+Math.random()*6+"s";
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),12000);
+},500);
 
-    if(c.t.includes("Propose")){
-      document.getElementById("ring").style.display="block";
-    }
-
-    document.getElementById("nextBtn").onclick = next;
+function render(){
+  const c=cards[index];
+  card.innerHTML=`
+    <div class="ring" id="ring"></div>
+    <h1 class="${c.t.includes("Valentine")?'valentine':''}">${c.t}</h1>
+    <p>${c.m}</p>
+  `;
+  if(c.t.includes("Propose")){
+    document.getElementById("ring").style.display="block";
   }
+  dots.innerHTML="";
+  cards.forEach((_,i)=>{
+    const d=document.createElement("div");
+    d.className="dot"+(i===index?" active":"");
+    dots.appendChild(d);
+  });
+  counter.innerText=`${index+1} / ${cards.length}`;
+}
 
-  function next(){
-    index++;
-    if(index < cards.length){
-      render();
-    } else {
-      card.innerHTML = `
-        <h1 class="valentine">💘 With Love</h1>
-        <p>Forever yours, Lipsy.</p>
-      `;
-    }
-  }
+/* 👆 Swipe detection */
+let startX=0;
+card.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+card.addEventListener("touchend",e=>{
+  const endX=e.changedTouches[0].clientX;
+  if(startX-endX>50 && index<cards.length-1){index++;render();}
+  if(endX-startX>50 && index>0){index--;render();}
+});
 
-  document.getElementById("envelope").onclick = () => {
-    document.getElementById("envelope").classList.add("open");
+/* 🖱 Mouse swipe */
+card.addEventListener("mousedown",e=>startX=e.clientX);
+card.addEventListener("mouseup",e=>{
+  const endX=e.clientX;
+  if(startX-endX>60 && index<cards.length-1){index++;render();}
+  if(endX-startX>60 && index>0){index--;render();}
+});
 
-    setTimeout(()=>{
-      document.getElementById("envelope").style.display="none";
-      stack.style.display="block";
-      render();
-      music.play().catch(()=>{});
-    },800);
-  };
+document.getElementById("envelope").onclick=()=>{
+  const env=document.getElementById("envelope");
+  env.classList.add("open");
+  setTimeout(()=>{
+    env.style.display="none";
+    document.getElementById("stack").style.display="block";
+    render();
+    yt.postMessage('{"event":"command","func":"unMute"}',"*");
+    yt.postMessage('{"event":"command","func":"playVideo"}',"*");
+  },800);
+};
 
 });
 </script>
