@@ -132,8 +132,8 @@ button:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(255,60,
   <div class="flap"></div>
 </div>
 
-<!-- YouTube Audio -->
-<iframe id="ytplayer" src="https://www.youtube.com/embed/2ZVX075EWnA?enablejsapi=1&loop=1&playlist=2ZVX075EWnA" allow="autoplay"></iframe>
+<!-- Audio -->
+<audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
 <div class="card" id="card" style="display:none;"></div>
 
@@ -153,6 +153,7 @@ const cards = [
 let index = 0, started = false;
 const card = document.getElementById('card');
 const ring = document.querySelector('.ring');
+const audio = document.getElementById('audio');
 
 // Falling petals generator
 function createPetals(count=30){
@@ -184,8 +185,7 @@ function render(){
 // Next card
 function next(){
   if(!started){
-    const p = document.getElementById('ytplayer').contentWindow;
-    p.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    audio.play();  // Play audio on first interaction
     started = true;
   }
   index++;
