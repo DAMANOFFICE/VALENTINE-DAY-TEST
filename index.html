@@ -152,6 +152,22 @@ p{
   font-size:.85rem;
   color:#ffb3c6;
 }
+  /* 👉 Swipe indicator */
+.swipe-hint{
+  margin-top:18px;
+  font-size:.9rem;
+  letter-spacing:.5px;
+  color:#ffb3c6;
+  opacity:.85;
+  animation:swipeMove 2s infinite;
+  user-select:none;
+}
+
+@keyframes swipeMove{
+  0%,100%{transform:translateX(0);opacity:.6}
+  50%{transform:translateX(12px);opacity:1}
+}
+
 </style>
 </head>
 
@@ -167,6 +183,7 @@ p{
   <div class="card" id="card"></div>
   <div class="dots" id="dots"></div>
   <div class="counter" id="counter"></div>
+  <div class="swipe-hint">⬅ Swipe to continue ➡</div>
 </div>
 
 <!-- 🎵 YouTube audio -->
