@@ -9,9 +9,10 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   min-height:100vh;
-  background:radial-gradient(circle at top,#3a0015,#000 70%);
+  background:radial-gradient(circle at top,#4a001d,#000 75%);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -23,68 +24,78 @@ body{
 /* Floating hearts */
 .heart{
   position:absolute;
-  font-size:18px;
+  font-size:16px;
   opacity:.7;
   animation:floatUp linear infinite;
 }
 @keyframes floatUp{
-  from{transform:translateY(110vh);opacity:0}
-  to{transform:translateY(-10vh);opacity:1}
+  from{transform:translateY(110vh) scale(.8);opacity:0}
+  to{transform:translateY(-10vh) scale(1.2);opacity:1}
 }
 
 /* Envelope */
 .envelope{
-  width:150px;
-  height:95px;
+  width:160px;
+  height:105px;
   background:#fff;
-  border-radius:14px;
+  border-radius:18px;
   cursor:pointer;
   position:absolute;
   z-index:10;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 .envelope::before{
   content:"";
   position:absolute;
   inset:0;
   border:2px solid #ff8fab;
-  border-radius:14px;
+  border-radius:18px;
 }
 .flap{
   position:absolute;
   top:0;
   width:100%;
-  height:50%;
-  background:#ff8fab;
+  height:55%;
+  background:linear-gradient(135deg,#ff8fab,#ff4d6d);
   transform-origin:top;
   transition:transform 1s ease;
 }
-.envelope.open .flap{transform:rotateX(-180deg)}
+.envelope.open .flap{
+  transform:rotateX(-180deg);
+}
 
 /* Card stack */
 .card-stack{
   position:relative;
   width:92%;
-  max-width:520px;
+  max-width:540px;
   display:none;
+  justify-content:center;
+  align-items:center;
 }
 .bg-card{
   position:absolute;
   inset:0;
-  border-radius:28px;
-  background:linear-gradient(180deg,#220010,#40001b);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  border-radius:32px;
+  background:linear-gradient(180deg,#260012,#480020);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
-.bg-card.one{transform:rotate(-6deg) translateY(10px)}
-.bg-card.two{transform:rotate(6deg) translateY(20px);opacity:.7}
+.bg-card.one{transform:rotate(-6deg) translateY(12px)}
+.bg-card.two{transform:rotate(6deg) translateY(22px);opacity:.6}
 
 /* Main card */
 .card{
   position:relative;
-  padding:60px 45px;
-  background:linear-gradient(180deg,#1a0008,#360016);
-  border-radius:30px;
-  box-shadow:0 40px 90px rgba(0,0,0,.8);
+  padding:65px 45px 55px;
+  background:linear-gradient(180deg,#1c000a,#3a0018);
+  border-radius:34px;
+  box-shadow:0 40px 90px rgba(0,0,0,.85);
   text-align:center;
+  min-height:360px;
   animation:cardIn .8s ease;
 }
 @keyframes cardIn{
@@ -96,7 +107,7 @@ body{
   position:absolute;
   inset:0;
   padding:2px;
-  border-radius:30px;
+  border-radius:34px;
   background:linear-gradient(120deg,#ffd27d,#ff8fab,#ffd27d);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
@@ -105,54 +116,63 @@ body{
 /* Ring */
 .ring{
   position:absolute;
-  top:-45px;
+  top:-48px;
   left:50%;
-  width:90px;
-  height:90px;
-  margin-left:-45px;
+  width:95px;
+  height:95px;
+  margin-left:-47.5px;
   border:4px solid gold;
   border-radius:50%;
-  box-shadow:0 0 25px gold;
-  animation:spin 2s linear infinite;
+  box-shadow:0 0 30px gold;
+  animation:ringGlow 2s infinite;
   display:none;
 }
-@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ringGlow{
+  0%,100%{box-shadow:0 0 20px gold}
+  50%{box-shadow:0 0 45px gold}
+}
 
 /* Text */
 h1{
   font-family:'Playfair Display',serif;
-  font-size:2.6rem;
+  font-size:2.4rem;
   margin-bottom:18px;
 }
 .valentine{
   background:linear-gradient(90deg,#ffd700,#fff,#ffd700);
+  background-size:200%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   animation:shine 2s linear infinite;
 }
-@keyframes shine{from{background-position:-200px}to{background-position:200px}}
+@keyframes shine{
+  from{background-position:0%}
+  to{background-position:200%}
+}
 
 p{
   font-size:1.05rem;
-  line-height:1.7;
+  line-height:1.75;
   color:#ffd9e1;
   min-height:90px;
-  margin-bottom:35px;
+  margin-bottom:38px;
 }
 
 /* Button */
 button{
-  padding:14px 42px;
-  border-radius:40px;
+  padding:14px 46px;
+  border-radius:50px;
   border:none;
   background:linear-gradient(135deg,#ff4d6d,#ff8fab);
   color:#fff;
   font-size:.95rem;
   cursor:pointer;
-  box-shadow:0 15px 45px rgba(255,80,120,.6);
+  box-shadow:0 18px 50px rgba(255,80,120,.65);
   transition:.3s;
 }
-button:hover{transform:translateY(-3px)}
+button:hover{
+  transform:translateY(-4px) scale(1.04);
+}
 </style>
 </head>
 
@@ -197,21 +217,31 @@ function typeText(el,text){
   let i=0;
   const id=setInterval(()=>{
     el.innerHTML+=text[i++];
-    if(i>=text.length)clearInterval(id);
+    if(i>=text.length) clearInterval(id);
   },30);
 }
 
 function render(){
   const c=cards[index];
+
   card.innerHTML=`
     <div class="ring" id="ring"></div>
     <h1 class="${c.t.includes("Valentine")?'valentine':''}">${c.t}</h1>
     <p id="msg"></p>
-    <button onclick="next()">Next Card</button>
+    <button id="nextBtn">Next Card</button>
   `;
-  if(c.t.includes("Propose")) document.getElementById("ring").style.display="block";
-  typeText(document.getElementById("msg"),c.m);
-  if(c.t.includes("Valentine")) spawnHearts(40);
+
+  setTimeout(()=>{
+    typeText(document.getElementById("msg"),c.m);
+
+    if(c.t.includes("Propose")){
+      document.getElementById("ring").style.display="block";
+    }
+
+    document.getElementById("nextBtn").onclick=next;
+  },50);
+
+  spawnHearts(25);
 }
 
 function next(){
@@ -230,18 +260,22 @@ function spawnHearts(n){
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=12+Math.random()*16+"px";
     h.style.animationDuration=5+Math.random()*6+"s";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),10000);
+    setTimeout(()=>h.remove(),11000);
   }
 }
 
 document.getElementById("envelope").onclick=()=>{
-  document.getElementById("envelope").classList.add("open");
+  const env=document.getElementById("envelope");
+  env.classList.add("open");
+
   setTimeout(()=>{
-    document.getElementById("envelope").style.display="none";
-    document.getElementById("stack").style.display="block";
+    env.style.display="none";
+    document.getElementById("stack").style.display="flex";
     render();
+
     const yt=document.getElementById("yt").contentWindow;
     yt.postMessage('{"event":"command","func":"unMute"}',"*");
     yt.postMessage('{"event":"command","func":"playVideo"}',"*");
