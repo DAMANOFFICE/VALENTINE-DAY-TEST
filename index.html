@@ -5,82 +5,118 @@
 <title>❤️ Lipsy, Happy Valentine’s ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   min-height:100vh;
-  background: radial-gradient(circle at top left,#2b0010,#000 60%);
-  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at top,#3a0015,#000 70%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-family:'Poppins',sans-serif;
-  overflow:hidden;color:#fff;
+  overflow:hidden;
+  color:#fff;
 }
 
 /* Floating hearts */
 .heart{
   position:absolute;
   font-size:18px;
+  opacity:.7;
   animation:floatUp linear infinite;
-  opacity:0.7;
 }
 @keyframes floatUp{
-  from{transform:translateY(100vh) scale(0.8);opacity:0}
-  to{transform:translateY(-10vh) scale(1.2);opacity:1}
+  from{transform:translateY(110vh);opacity:0}
+  to{transform:translateY(-10vh);opacity:1}
 }
 
 /* Envelope */
 .envelope{
-  width:140px;height:90px;
+  width:150px;
+  height:95px;
   background:#fff;
-  border-radius:10px;
-  position:absolute;
+  border-radius:14px;
   cursor:pointer;
+  position:absolute;
   z-index:10;
 }
-.envelope:before{
+.envelope::before{
   content:"";
   position:absolute;
   inset:0;
-  border:2px solid #ffb6c1;
-  border-radius:10px;
+  border:2px solid #ff8fab;
+  border-radius:14px;
 }
 .flap{
   position:absolute;
   top:0;
-  width:100%;height:45px;
-  background:#ffb6c1;
+  width:100%;
+  height:50%;
+  background:#ff8fab;
   transform-origin:top;
-  transition:transform 1s;
+  transition:transform 1s ease;
 }
 .envelope.open .flap{transform:rotateX(-180deg)}
 
-/* Card */
-.card{
-  max-width:520px;
-  width:90%;
-  padding:60px 45px;
-  background:linear-gradient(180deg,#1a0008,#320014);
-  border-radius:30px;
-  box-shadow:0 40px 80px rgba(0,0,0,.7);
-  text-align:center;
-  display:none;
-  animation:fadeSlide .8s ease;
+/* Card stack */
+.card-stack{
   position:relative;
+  width:92%;
+  max-width:520px;
+  display:none;
 }
-@keyframes fadeSlide{
+.bg-card{
+  position:absolute;
+  inset:0;
+  border-radius:28px;
+  background:linear-gradient(180deg,#220010,#40001b);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.bg-card.one{transform:rotate(-6deg) translateY(10px)}
+.bg-card.two{transform:rotate(6deg) translateY(20px);opacity:.7}
+
+/* Main card */
+.card{
+  position:relative;
+  padding:60px 45px;
+  background:linear-gradient(180deg,#1a0008,#360016);
+  border-radius:30px;
+  box-shadow:0 40px 90px rgba(0,0,0,.8);
+  text-align:center;
+  animation:cardIn .8s ease;
+}
+@keyframes cardIn{
   from{opacity:0;transform:translateY(40px)}
   to{opacity:1;transform:translateY(0)}
 }
-.card:before{
+.card::before{
   content:"";
-  position:absolute;inset:0;
-  border-radius:30px;
+  position:absolute;
+  inset:0;
   padding:2px;
-  background:linear-gradient(120deg,#ffd27d,#ff9eb3,#ffd27d);
+  border-radius:30px;
+  background:linear-gradient(120deg,#ffd27d,#ff8fab,#ffd27d);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
 }
+
+/* Ring */
+.ring{
+  position:absolute;
+  top:-45px;
+  left:50%;
+  width:90px;
+  height:90px;
+  margin-left:-45px;
+  border:4px solid gold;
+  border-radius:50%;
+  box-shadow:0 0 25px gold;
+  animation:spin 2s linear infinite;
+  display:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* Text */
 h1{
@@ -100,37 +136,23 @@ p{
   font-size:1.05rem;
   line-height:1.7;
   color:#ffd9e1;
-  margin-bottom:35px;
   min-height:90px;
+  margin-bottom:35px;
 }
 
 /* Button */
 button{
-  padding:14px 40px;
+  padding:14px 42px;
   border-radius:40px;
   border:none;
   background:linear-gradient(135deg,#ff4d6d,#ff8fab);
   color:#fff;
-  font-size:0.95rem;
+  font-size:.95rem;
   cursor:pointer;
-  box-shadow:0 14px 40px rgba(255,80,120,.6);
+  box-shadow:0 15px 45px rgba(255,80,120,.6);
   transition:.3s;
 }
 button:hover{transform:translateY(-3px)}
-
-/* Ring */
-.ring{
-  position:absolute;
-  top:-40px;left:50%;
-  width:90px;height:90px;
-  margin-left:-45px;
-  border:4px solid gold;
-  border-radius:50%;
-  box-shadow:0 0 20px gold;
-  animation:spin 2s linear infinite;
-  display:none;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 
@@ -141,63 +163,65 @@ button:hover{transform:translateY(-3px)}
   <div class="flap"></div>
 </div>
 
-<!-- Card -->
-<div class="card" id="card">
-  <div class="ring" id="ring"></div>
+<!-- Card stack -->
+<div class="card-stack" id="stack">
+  <div class="bg-card one"></div>
+  <div class="bg-card two"></div>
+  <div class="card" id="card"></div>
 </div>
 
-<!-- YouTube audio (hidden) -->
+<!-- YouTube audio -->
 <iframe id="yt"
-  src="https://www.youtube.com/embed/2ZVX075EWnA?enablejsapi=1&autoplay=0&mute=1"
-  allow="autoplay"
-  style="display:none">
-</iframe>
+src="https://www.youtube.com/embed/2ZVX075EWnA?enablejsapi=1&autoplay=0&mute=1"
+allow="autoplay"
+style="display:none"></iframe>
 
 <script>
 const cards=[
- {t:"Happy Valentine’s, Lipsy",m:"This little space exists only to remind you how special you are to me."},
- {t:"🌹 Rose Day",m:"Every rose feels softer when I think of you."},
- {t:"💍 Propose Day",m:"If feelings could become promises, mine would choose you."},
+ {t:"Happy Valentine’s, Lipsy",m:"This little space exists just to remind you how special you are."},
+ {t:"🌹 Rose Day",m:"Every rose feels warmer when I think of you."},
+ {t:"💍 Propose Day",m:"If feelings could become promises, mine would always choose you."},
  {t:"🍫 Chocolate Day",m:"Sweet moments feel sweeter when shared with you."},
- {t:"🧸 Teddy Day",m:"Here’s a warm, quiet hug wrapped just for you."},
- {t:"🤞 Promise Day",m:"I promise honesty, care, and respect—always."},
+ {t:"🧸 Teddy Day",m:"Here’s a soft hug wrapped just for you."},
+ {t:"🤞 Promise Day",m:"I promise honesty, patience, and care — always."},
  {t:"🤗 Hug Day",m:"Close your eyes… feel this hug."},
  {t:"💋 Kiss Day",m:"Some feelings don’t need words."},
- {t:"❤️ Valentine’s Day",m:"Lipsy, thank you for making life gentler. Happy Valentine’s Day."}
+ {t:"❤️ Valentine’s Day",m:"Lipsy, thank you for making life gentler."}
 ];
 
-let i=0,started=false;
+let index=0;
 const card=document.getElementById("card");
-const ring=document.getElementById("ring");
-const yt=document.getElementById("yt").contentWindow;
 
 function typeText(el,text){
   el.innerHTML="";
-  let n=0;
+  let i=0;
   const id=setInterval(()=>{
-    el.innerHTML+=text[n++];
-    if(n>=text.length)clearInterval(id);
+    el.innerHTML+=text[i++];
+    if(i>=text.length)clearInterval(id);
   },30);
 }
 
 function render(){
-  const c=cards[i];
+  const c=cards[index];
   card.innerHTML=`
     <div class="ring" id="ring"></div>
-    <h1 class="${c.t.includes("Valentine")?"valentine":""}">${c.t}</h1>
+    <h1 class="${c.t.includes("Valentine")?'valentine':''}">${c.t}</h1>
     <p id="msg"></p>
-    <button onclick="next()">Continue</button>
+    <button onclick="next()">Next Card</button>
   `;
-  if(c.t.includes("Propose")) card.querySelector(".ring").style.display="block";
+  if(c.t.includes("Propose")) document.getElementById("ring").style.display="block";
   typeText(document.getElementById("msg"),c.m);
-
-  if(c.t.includes("Valentine")) spawnHearts(25);
+  if(c.t.includes("Valentine")) spawnHearts(40);
 }
 
 function next(){
-  i++;
-  if(i<cards.length) render();
-  else card.innerHTML="<h1>💘 With Love</h1><p>Always yours.</p>";
+  index++;
+  if(index<cards.length){
+    render();
+  }else{
+    card.innerHTML="<h1 class='valentine'>💘 With Love</h1><p>Forever yours, Lipsy.</p>";
+    spawnHearts(60);
+  }
 }
 
 function spawnHearts(n){
@@ -206,21 +230,19 @@ function spawnHearts(n){
     h.className="heart";
     h.innerHTML="❤️";
     h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=5+Math.random()*5+"s";
+    h.style.animationDuration=5+Math.random()*6+"s";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),10000);
   }
 }
 
-/* Envelope click = start everything */
 document.getElementById("envelope").onclick=()=>{
   document.getElementById("envelope").classList.add("open");
   setTimeout(()=>{
     document.getElementById("envelope").style.display="none";
-    card.style.display="block";
+    document.getElementById("stack").style.display="block";
     render();
-
-    // Play YouTube audio after click
+    const yt=document.getElementById("yt").contentWindow;
     yt.postMessage('{"event":"command","func":"unMute"}',"*");
     yt.postMessage('{"event":"command","func":"playVideo"}',"*");
   },1000);
