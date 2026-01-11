@@ -8,24 +8,20 @@
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at left, #1a0005 0%, #000 55%),
-              linear-gradient(120deg, #000, #2b0009);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
+  background: radial-gradient(circle at left, #1a0005 0%, #000 55%), linear-gradient(120deg, #000, #2b0009);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  font-family: 'Poppins', sans-serif; color: #fff; position: relative;
 }
 
 /* Roses / petals */
-.roses { position: absolute; right: -10%; top: 0; width: 60%; height: 100%; 
-  background: radial-gradient(circle at center, rgba(255,0,50,0.35), transparent 60%), 
+.roses {
+  position: absolute; right: -10%; top: 0; width: 60%; height: 100%;
+  background: radial-gradient(circle at center, rgba(255,0,50,0.35), transparent 60%),
               repeating-linear-gradient(45deg, rgba(180,0,40,0.15) 0, rgba(180,0,40,0.15) 10px, rgba(120,0,30,0.15) 10px, rgba(120,0,30,0.15) 20px);
   filter: blur(0.3px); animation: rosesMove 20s ease-in-out infinite alternate;
+  z-index: 0;
 }
 @keyframes rosesMove { from { transform: translateX(0); } to { transform: translateX(-40px); } }
 
@@ -37,9 +33,12 @@ body {
   background-size: contain;
   pointer-events: none;
   animation: fall linear infinite;
+  z-index: 1;
 }
-@keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 
-                 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+@keyframes fall { 
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; } 
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } 
+}
 
 /* Candle flicker */
 .candle {
@@ -49,12 +48,13 @@ body {
   border-radius: 50% 50% 0 0;
   box-shadow: 0 0 20px #ff9a5c;
   animation: flicker 1s infinite;
+  z-index: 2;
 }
 @keyframes flicker { 0%,100%{opacity:0.85; transform:scaleY(1);}50%{opacity:1; transform:scaleY(1.1);} }
 
 /* Main card */
 .card {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
   max-width: 520px; width: 92%; padding: 70px 55px;
   background: linear-gradient(180deg, #0b0b0b, #1a0005);
   border-radius: 26px; box-shadow: 0 40px 90px rgba(0,0,0,0.7);
@@ -93,7 +93,7 @@ button:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(255,60,
   position: absolute; top: 20px; left: 50%; width: 100px; height: 100px;
   margin-left: -50px; border: 4px solid gold; border-radius: 50%;
   box-shadow: 0 0 20px gold; animation: ringSpin 2s linear infinite, ringScale 1s ease-in-out infinite alternate;
-  opacity: 0; transition: opacity 0.5s; z-index: 3;
+  opacity: 0; transition: opacity 0.5s; z-index: 4;
 }
 .ring.show { opacity: 1; }
 @keyframes ringSpin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
@@ -111,13 +111,16 @@ button:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(255,60,
 .envelope {
   width: 120px; height: 80px; background: #fff; border: 2px solid #ffd27d;
   border-radius: 8px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  overflow: hidden; z-index: 10;
+  overflow: hidden; z-index: 5; perspective: 600px;
 }
 .flap {
   width: 120px; height: 40px; background: #ffd27d; position: absolute; top:0;
-  transform-origin: top center; animation: flapOpen 1s forwards;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  animation: flapOpen 1s forwards;
 }
 @keyframes flapOpen { 0% { transform: rotateX(0deg);} 100% { transform: rotateX(-180deg);} }
+
 </style>
 </head>
 <body>
@@ -135,6 +138,7 @@ button:hover { transform: translateY(-3px); box-shadow: 0 18px 44px rgba(255,60,
 <!-- Audio -->
 <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
+<!-- Card -->
 <div class="card" id="card" style="display:none;"></div>
 
 <script>
@@ -200,7 +204,7 @@ window.onload = ()=>{
     document.getElementById('envelope').style.display='none';
     card.style.display='block';
     render();
-  },1200);
+  },1500); // wait 1.5s for flap animation
 }
 </script>
 </body>
