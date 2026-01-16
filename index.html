@@ -221,7 +221,7 @@ function render(){
   if(c.t.includes("Propose")) html+='<div class="ring"></div>';
   html+=`<h1>${c.t}</h1><p>${c.m}</p>`;
   if(index===cards.length-1){
-    html+=`<div class="choice"><div onclick="openModal()">YES 💖</div></div>`;
+    html+=`<div class="choice"><div onclick="openModal()">YES 💖</div><div onclick="alert('Still means everything to me ❤️')">NO 😊</div></div>`;
   }
   card.innerHTML=html;
   dots.innerHTML=cards.map((_,i)=>`<div class="dot ${i===index?'active':''}"></div>`).join("");
