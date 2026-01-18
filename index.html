@@ -274,7 +274,7 @@ function createHeartPop() {
   for(let i=0; i<3; i++) {
     const heart = document.createElement("div");
     heart.className = "heart-pop";
-    heart.innerHTML = ["❤️","💖","💝","🌸","✨"][Math.floor(Math.random()*5)];
+    heart.innerHTML = ["❤️","💖","💝","🌸","✨","❤️‍🔥","🧸"][Math.floor(Math.random()*7)];
     heart.style.left = (Math.random() * 80 + 10) + "vw";
     heart.style.top = "80vh";
     heart.style.animationDelay = (i * 0.2) + "s";
@@ -294,7 +294,7 @@ function render(){
   html+=`<h1>${c.t}</h1><p>${c.m}</p>`;
   
   if(index===cards.length-1){
-    html+=`<div class="choice"><div onclick="openModal()">YES 💖</div><div onclick="alert('You were never going to say no anyway! 😉')">NO 😊</div></div>`;
+    html+=`<div class="choice"><div onclick="openModal()">YES 💖</div><div onclick="alert('No problem at all! I still think the world of you😊🌷')">NO 😊</div></div>`;
   }
   
   card.innerHTML=html;
