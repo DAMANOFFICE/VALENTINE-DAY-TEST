@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -37,19 +36,6 @@ body{
 }
 @keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
 
-/* 💖 Floating Heart Bursts */
-.heart-pop {
-  position: fixed;
-  font-size: 2rem;
-  pointer-events: none;
-  animation: flyUp 1.5s ease-out forwards;
-  z-index: 1000;
-}
-@keyframes flyUp {
-  0% { transform: translateY(0) scale(0.5); opacity: 1; }
-  100% { transform: translateY(-250px) scale(1.5) rotate(20deg); opacity: 0; }
-}
-
 /* ✉️ Envelope */
 .envelope{
   width:160px;
@@ -63,13 +49,6 @@ body{
   box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
 }
 @keyframes bounce{50%{transform:translateY(-15px) scale(1.05)}}
-.envelope::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border:2px solid #ff8fab;
-  border-radius:18px;
-}
 .flap{
   position:absolute;
   top:0;
@@ -82,267 +61,122 @@ body{
 }
 .envelope.open .flap{transform:rotateX(-180deg)}
 
-/* 💌 Card Stack */
+/* 💌 Card */
 .card-stack{
   display:none;
-  width:95%;
-  max-width:420px;
+  width:90%;
+  max-width:400px;
   text-align:center;
 }
 .card{
   background:rgba(28, 0, 10, 0.95);
   border-radius:30px;
-  padding:20px;
-  min-height:500px;
+  padding:30px;
+  min-height:450px;
   box-shadow:0 30px 80px rgba(0,0,0,0.8);
   border: 1px solid rgba(255, 77, 109, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  #backdrop-filter: blur(10px);
 }
 
-/* Fix for Panda Visibility */
-dotlottie-player {
-  display: block;
-  margin: 0 auto;
-  min-height: 220px;
+.panda-gif {
+  width: 180px;
+  height: 180px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  object-fit: cover;
 }
 
-/* Transitions */
-.exit-left{animation:exitLeft .45s forwards}
-.exit-right{animation:exitRight .45s forwards}
-.enter{animation:enter .5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards}
+h1{ font-family:'Playfair Display',serif; font-size:1.5rem; color:#ff8fab; margin-bottom:10px; }
+p{ font-size:1rem; color:#ffd9e1; line-height:1.4; }
 
-@keyframes exitLeft{to{opacity:0;transform:translateX(-100px) rotate(-5deg)}}
-@keyframes exitRight{to{opacity:0;transform:translateX(100px) rotate(5deg)}}
-@keyframes enter{from{opacity:0;transform:scale(0.8) translateY(30px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.dots{ display:flex; justify-content:center; gap:8px; margin-top:25px; }
+.dot{ width:8px; height:8px; background:rgba(255,143,171,0.2); border-radius:50%; transition:0.3s; }
+.dot.active{ background:#ff4d6d; width:20px; border-radius:10px; }
 
-.ring-container { margin-bottom: 5px; position: relative; }
-.ring{
-  width:60px;height:60px;
-  border:4px solid gold;
-  border-radius:50%;
-  box-shadow:0 0 20px gold;
-}
-.ring::after { content: "💎"; position: absolute; top: -15px; left: 18px; font-size: 1.3rem; }
-
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:1.6rem;
-  margin: 10px 0;
-  color: #ff8fab;
-}
-p{
-  font-size:0.95rem;
-  line-height:1.5;
-  color:#ffd9e1;
-  padding: 0 10px;
-}
-
-/* Interaction Buttons */
-.choice{
-  display:flex;
-  gap:15px;
-  justify-content:center;
-  margin-top:20px;
-}
-.choice div{
-  padding:10px 25px;
-  border-radius:50px;
-  cursor:pointer;
-  background:#ff4d6d;
-  font-weight: 600;
-  transition:.3s;
-}
-.choice div:hover{transform:scale(1.1); background:#ff758f;}
-
-.dots{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  margin-top:20px;
-}
-.dot{
-  width:8px;height:8px;
-  background:rgba(255, 143, 171, 0.3);
-  border-radius:50%;
-}
-.dot.active{background:#ff4d6d; width: 20px; border-radius: 10px;}
-
-/* Modal Form */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index: 2000;
-}
-.modal-content{
-  background:#2a0012;
-  padding:30px;
-  border-radius:25px;
-  width:90%;
-  max-width:380px;
-  text-align:center;
-  border: 1px solid #ff4d6d;
-}
-textarea{
-  width:100%;
-  height:100px;
-  border-radius:12px;
-  padding:15px;
-  margin: 15px 0;
-  background: #1c000a;
+.btn-yes {
+  margin-top: 25px;
+  background: #ff4d6d;
   color: white;
-  border: 1px solid #4a001d;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
 }
 </style>
 </head>
-
 <body>
 
 <div class="envelope" id="envelope"><div class="flap"></div></div>
 
 <div class="card-stack" id="stack">
-  <div class="card enter" id="card"></div>
+  <div class="card" id="card"></div>
   <div class="dots" id="dots"></div>
 </div>
 
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>💌 Message for me?</h3>
-    <textarea id="userMessage" placeholder="Type here..."></textarea>
-    <button style="padding:10px 25px; border:none; border-radius:50px; background:#ff4d6d; color:#fff; cursor:pointer;" onclick="saveOnline()">Send ❤️</button>
-  </div>
-</div>
-
 <script>
-const pandas = {
-  default: "https://lottie.host/8040407a-7731-4091-998b-70068565f14e/7F9T5D6Y4k.json", 
-  rose: "https://lottie.host/36974720-6725-4672-8f15-776f8902506e/6Y969iJ6x2.json",    
-  food: "https://lottie.host/8c0678d7-d710-4824-964a-25032b8429e2/L59mF33pS7.json",    
-  love: "https://lottie.host/db902264-3257-4100-9ef2-5e608149e0c5/Inp4W9j80C.json"     
-};
-
-const cards=[
- {t:"Happy Valentine’s, Lipsy", m:"The Mona Lisa would still be the greatest art… if your smile didn’t exist ❤️", p: pandas.default},
- {t:"🌹 Rose Day", m:"Like a rose, my love for you is beautiful, deep, and forever blooming", p: pandas.rose},
- {t:"💍 Propose Day", m:"If feelings could become promises, mine would always choose you.", p: pandas.love},
- {t:"🍫 Chocolate Day", m:"Life feels sweeter with you around.", p: pandas.food},
- {t:"🧸 Teddy Day", m:"I want to be the comfort you hold onto every night", p: pandas.default},
- {t:"🤞 Promise Day", m:"I promise to love you in every season and every mood.", p: pandas.love},
- {t:"🤗 Hug Day", m:"If I could pause time, it would be in your hug", p: pandas.default},
- {t:"💋 Kiss Day", m:"Your presence leaves warmth in my heart all day", p: pandas.love},
- {t:"❤️ Valentine’s Day", m:"Will you be mine, today and every day after?", p: pandas.default}
+// Cute Panda GIFs instead of Lottie scripts
+const pandaGifs = [
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v6aOebdEG8wTj7_u9P/giphy.gif", // Wave
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/V9X2yA2p2vYw6Xm4u6/giphy.gif", // Rose
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/K7vX6v6X6v6X6v6X6v6/giphy.gif", // Love
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcno0eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9rjzM63p4p8Xm98Xm8/giphy.gif"  // Happy
 ];
 
-let index=0;
-const card=document.getElementById("card");
-const dots=document.getElementById("dots");
+const cards = [
+  {t:"Happy Valentine’s, Lipsy", m:"The Mona Lisa would still be the greatest art… if your smile didn’t exist ❤️", g: pandaGifs[0]},
+  {t:"🌹 Rose Day", m:"Like a rose, my love for you is beautiful and deep.", g: pandaGifs[1]},
+  {t:"💍 Propose Day", m:"I would choose you in every lifetime.", g: pandaGifs[2]},
+  {t:"❤️ Valentine’s Day", m:"Will you be mine, today and forever?", g: pandaGifs[3]}
+];
 
-function createHeartPop() {
-  const heart = document.createElement("div");
-  heart.className = "heart-pop";
-  heart.innerHTML = "💖";
-  heart.style.left = (Math.random() * 80 + 10) + "vw";
-  heart.style.top = "70vh";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(), 1500);
+let index = 0;
+
+function render() {
+  const c = cards[index];
+  const container = document.getElementById("card");
+  
+  container.innerHTML = `
+    <img src="${c.g}" class="panda-gif" alt="Panda Animation">
+    <h1>${c.t}</h1>
+    <p>${c.m}</p>
+    ${index === cards.length - 1 ? '<button class="btn-yes" onclick="alert(\'I love you! ❤️\')">YES! 💖</button>' : ''}
+  `;
+  
+  document.getElementById("dots").innerHTML = cards.map((_, i) => 
+    `<div class="dot ${i === index ? 'active' : ''}"></div>`
+  ).join("");
 }
 
-function render(){
-  const c=cards[index];
-  // Force a fresh player element each time to ensure Lottie triggers
-  let html=`<dotlottie-player src="${c.p}" background="transparent" speed="1" style="width: 220px; height: 220px;" loop autoplay></dotlottie-player>`;
-  
-  if(c.t.includes("Propose")) {
-    html = `<div class="ring-container"><div class="ring"></div></div>` + html;
-  }
-  
-  html+=`<h1>${c.t}</h1><p>${c.m}</p>`;
-  
-  if(index===cards.length-1){
-    html+=`<div class="choice"><div onclick="openModal()">YES 💖</div><div onclick="alert('Yay! ❤️')">NO 😊</div></div>`;
-  }
-  
-  card.innerHTML=html;
-  dots.innerHTML=cards.map((_,i)=>`<div class="dot ${i===index?'active':''}"></div>`).join("");
-}
-
-function swipe(dir){
-  createHeartPop();
-  card.classList.remove("enter");
-  card.classList.add(dir==="left"?"exit-left":"exit-right");
-  setTimeout(()=>{
-    index+=dir==="left"?1:-1;
-    card.className="card enter";
-    render();
-  },450);
-}
-
-document.getElementById("envelope").onclick=()=>{
+document.getElementById("envelope").onclick = () => {
   document.getElementById("envelope").classList.add("open");
-  setTimeout(()=>{
-    document.getElementById("envelope").style.display="none";
-    document.getElementById("stack").style.display="block";
+  setTimeout(() => {
+    document.getElementById("envelope").style.display = "none";
+    document.getElementById("stack").style.display = "block";
     render();
-  },800);
+  }, 800);
 };
 
-function openModal(){document.getElementById("modal").style.display="flex"}
-function closeModal(){document.getElementById("modal").style.display="none"}
-
-let startX=0;
-card.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-card.addEventListener('touchend', e => {
-  let endX = e.changedTouches[0].clientX;
-  if(startX - endX > 50 && index < cards.length-1) swipe("left");
-  if(endX - startX > 50 && index > 0) swipe("right");
-});
-
-setInterval(()=>{
-  const p=document.createElement("div");
-  p.className="petal";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=6+Math.random()*6+"s";
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),12000);
-},600);
-</script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyC7ihEC108GG-FL7cJWidiC4uc2B-7kv_Y",
-  authDomain: "msgl-157b0.firebaseapp.com",
-  projectId: "msgl-157b0",
-  storageBucket: "msgl-157b0.firebasestorage.app",
-  messagingSenderId: "862235386858",
-  appId: "1:862235386858:web:c2123cb0c7405d1fba0893"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.saveOnline = async function(){
-  const text=document.getElementById("userMessage").value.trim();
-  if(!text){alert("Write something! ❤️");return;}
-  try {
-    await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
-    alert("Sent! ❤️");
-    closeModal();
-  } catch (e) {
-    console.error("Error adding document: ", e);
-    alert("Error sending message. Check console.");
+// Simple Tap to Change (Easier than swipe for some browsers)
+document.getElementById("card").onclick = () => {
+  if (index < cards.length - 1) {
+    index++;
+    render();
   }
 };
+
+// Petals
+setInterval(() => {
+  const p = document.createElement("div");
+  p.className = "petal";
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (Math.random() * 3 + 5) + "s";
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), 8000);
+}, 500);
 </script>
 
 </body>
