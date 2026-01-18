@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@dotlottie/player-component@2.7.1/dist/dotlottie-player.mjs" type="module"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -101,7 +101,14 @@ body{
   justify-content: center;
   align-items: center;
   position: relative;
-  backdrop-filter: blur(10px);
+  #backdrop-filter: blur(10px);
+}
+
+/* Fix for Panda Visibility */
+dotlottie-player {
+  display: block;
+  margin: 0 auto;
+  min-height: 220px;
 }
 
 /* Transitions */
@@ -215,7 +222,6 @@ textarea{
 </div>
 
 <script>
-// I updated these URLs to the direct .lottie versions which load much faster and more reliably
 const pandas = {
   default: "https://lottie.host/8040407a-7731-4091-998b-70068565f14e/7F9T5D6Y4k.json", 
   rose: "https://lottie.host/36974720-6725-4672-8f15-776f8902506e/6Y969iJ6x2.json",    
@@ -251,6 +257,7 @@ function createHeartPop() {
 
 function render(){
   const c=cards[index];
+  // Force a fresh player element each time to ensure Lottie triggers
   let html=`<dotlottie-player src="${c.p}" background="transparent" speed="1" style="width: 220px; height: 220px;" loop autoplay></dotlottie-player>`;
   
   if(c.t.includes("Propose")) {
@@ -278,7 +285,6 @@ function swipe(dir){
   },450);
 }
 
-// Fixed Envelope Trigger
 document.getElementById("envelope").onclick=()=>{
   document.getElementById("envelope").classList.add("open");
   setTimeout(()=>{
@@ -291,7 +297,6 @@ document.getElementById("envelope").onclick=()=>{
 function openModal(){document.getElementById("modal").style.display="flex"}
 function closeModal(){document.getElementById("modal").style.display="none"}
 
-// Simple Swipe Detection
 let startX=0;
 card.addEventListener('touchstart', e => startX = e.touches[0].clientX);
 card.addEventListener('touchend', e => {
@@ -300,7 +305,6 @@ card.addEventListener('touchend', e => {
   if(endX - startX > 50 && index > 0) swipe("right");
 });
 
-// Petals
 setInterval(()=>{
   const p=document.createElement("div");
   p.className="petal";
@@ -330,9 +334,14 @@ const db = getFirestore(app);
 window.saveOnline = async function(){
   const text=document.getElementById("userMessage").value.trim();
   if(!text){alert("Write something! ❤️");return;}
-  await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
-  alert("Sent! ❤️");
-  closeModal();
+  try {
+    await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
+    alert("Sent! ❤️");
+    closeModal();
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    alert("Error sending message. Check console.");
+  }
 };
 </script>
 
