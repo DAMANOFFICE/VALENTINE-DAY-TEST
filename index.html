@@ -283,14 +283,14 @@ function createHeartPop() {
 
 function handleNo(step) {
   if (step === 1) {
-    if (confirm("Are you sure? 🥺")) {
+    if (confirm("pakki gal aa ? 🥺")) {
       handleNo(2);
     } else {
       openModal();
     }
   } else if (step === 2) {
-    if (confirm("Really? 😢 last chance to change your mind...")) {
-      alert("No problem at all! I still think the world of you 😊🌷");
+    if (confirm("dekh la badi muskil naal code kita aa 🥺🥺🙏")) {
+      alert("chal theek aa inna dekh lya Boht aa 😊🌷");
     } else {
       openModal();
     }
@@ -385,7 +385,7 @@ const db = getFirestore(app);
 
 window.saveOnline = async function(){
   const text=document.getElementById("userMessage").value.trim();
-  if(!text){alert("Write something sweet! ❤️");return;}
+  if(!text){alert("Write something sweeti! ❤️");return;}
   try {
     await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
     alert("Message sent to my heart! ❤️");
