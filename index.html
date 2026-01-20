@@ -254,11 +254,11 @@ const gifs = {
 const cards=[
  {t:"Happy Valentine’s, Lipsy", m:"The Mona Lisa would still be the greatest art… if your smile didn’t exist ❤️", g: gifs.intro},
  {t:"🌹 Rose Day", m:"Like a rose, my love for you is beautiful, deep, and forever blooming", g: gifs.rose},
- {t:"💍 Propose Day", m:"If feelings could become promises, mine would always choose you.", g: gifs.propose},
- {t:"🍫 Chocolate Day", m:"Life feels sweeter with you around.", g: gifs.food},
+ {t:"💍 Propose Day", m:"I found my peace the moment I found you. Now, I want to make sure I never have to look for it again. Will you do me the honor of spending forever with me?", g: gifs.propose},
+ {t:"🍫 Chocolate Day", m:"You melt my stress away just like chocolate. I hope I can be your choclate one day, just as you are mine." g: gifs.food},
  {t:"🧸 Teddy Day", m:"I want to be the comfort you hold onto every night", g: gifs.teddy},
- {t:"🤞 Promise Day", m:"I promise to love you in every season and every mood.", g: gifs.promise},
- {t:"🤗 Hug Day", m:"If I could pause time, it would be in your hug", g: gifs.hug},
+ {t:"🤞 Promise Day", m:"I promise you that ill do my best to understand you ,to love you and only you in every universe.", g: gifs.promise},
+ {t:"🤗 Hug Day", m:"I want to be the person whose hug gives you sakoon from all your problems, because you are that person for me", g: gifs.hug},
  {t:"💋 Kiss Day", m:"Your presence leaves warmth in my heart all day", g: gifs.kiss},
  {t:"❤️ Valentine’s Day", m:"Will you be mine, today and every day after?", g: gifs.valentine}
 ];
@@ -283,14 +283,14 @@ function createHeartPop() {
 
 function handleNo(step) {
   if (step === 1) {
-    if (confirm("pakki gal aa ? 🥺")) {
+    if (confirm("oh gaala hi kad de par kush taan bhej ? 🥺")) {
       handleNo(2);
     } else {
       openModal();
     }
   } else if (step === 2) {
-    if (confirm("dekh la badi muskil naal code kita aa 🥺🥺🙏")) {
-      alert("chal theek aa inna dekh lya Boht aa 😊🌷");
+    if (confirm("dekh la bada time le ke code likya mein 🥺🥺🙏")) {
+      alert("chal koi ni inna dekhna v boht aa mere lyi 😊🌷");
     } else {
       openModal();
     }
@@ -385,14 +385,14 @@ const db = getFirestore(app);
 
 window.saveOnline = async function(){
   const text=document.getElementById("userMessage").value.trim();
-  if(!text){alert("Write something sweeti! ❤️");return;}
+  if(!text){alert("madam kush likh taan do  ! ❤️");return;}
   try {
     await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
-    alert("Message sent to my heart! ❤️");
+    alert("chl gya ji message ! ❤️");
     document.getElementById("userMessage").value="";
     closeModal();
   } catch(e) {
-    alert("Sent! (Though the internet might be shy today)");
+    alert("Sent! (net da issue maybe thoda )");
     closeModal();
   }
 };
@@ -400,3 +400,4 @@ window.saveOnline = async function(){
 
 </body>
 </html>
+
