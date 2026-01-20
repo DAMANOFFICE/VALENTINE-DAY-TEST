@@ -95,7 +95,7 @@ body{
   min-height:480px;
   /* box-shadow:0 30px 80px rgba(0,0,0,0.8); */
   /* border: 1px solid rgba(255, 77, 109, 0.3); */
-  border: 2px solid #ff00de;
+  border: 1px solid #ff00de;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,16 +108,14 @@ body{
                 inset 0 0 15px #ff00de;
 }
  .card:hover {
-  filter: hue-rotate(45-deg); /* Shifts magenta toward purple/blue */
-  transform: translateY(-10px);
-}
+  border: 3px solid #ff00de;
 
 .card-gif {
   width: 180px;
   height: 180px;
   object-fit: contain;
   margin-bottom: 10px;
-  border: 2px solid #bc13fe;
+  border: 1px solid #bc13fe;
   border-radius: 15px;
   box-shadow: 
     0 0 10px #bc13fe, 
@@ -414,6 +412,7 @@ window.saveOnline = async function(){
 
 </body>
 </html>
+
 
 
 
