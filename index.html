@@ -235,7 +235,7 @@ button{
 <div class="envelope" id="envelope"> <div class="card-text">TAP ME</div><div class="flap"></div></div>
 
 <div class="card-stack" id="stack">
-  <div class="card enter" id="card"> SWIPE LEFT <-----</div>
+  <div class="card enter" id="card"></div>
   <div class="dots" id="dots"></div>
 </div>
 
@@ -374,9 +374,9 @@ setInterval(()=>{
   const p=document.createElement("div");
   p.className="petal";
   p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=10+Math.random()*6+"s";
+  p.style.animationDuration=10+Math.random()*10+"s";
   document.body.appendChild(p);
-  setTimeout(()=>p.remove(),12000);
+  setTimeout(()=>p.remove(),2000);
 },600);
 </script>
 
@@ -414,6 +414,7 @@ window.saveOnline = async function(){
 
 </body>
 </html>
+
 
 
 
