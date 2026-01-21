@@ -109,7 +109,9 @@ body{
 }
  /* .card:hover {
   border: 3px solid #ff00de; */
-
+.card-text{
+  margin: 0px;
+}
 .card-gif {
   width: 180px;
   height: 180px;
@@ -230,7 +232,7 @@ button{
 
 <body>
 
-<div class="envelope" id="envelope"> <div>TAP ME</div><div class="flap"></div></div>
+<div class="envelope" id="envelope"> <div class="card-text">TAP ME</div><div class="flap"></div></div>
 
 <div class="card-stack" id="stack">
   <div class="card enter" id="card"> SWIPE LEFT <-----</div>
@@ -412,6 +414,7 @@ window.saveOnline = async function(){
 
 </body>
 </html>
+
 
 
 
