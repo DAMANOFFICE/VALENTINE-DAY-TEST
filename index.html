@@ -9,7 +9,8 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
+  @import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 body{
   min-height:100vh;
   background:radial-gradient(circle at center,#4a001d,#000 70%);
@@ -29,7 +30,7 @@ body{
   height:18px;
   background:radial-gradient(circle,#ff9aa2,#ff4d6d);
   border-radius:50% 50% 50% 0;
-  transform:rotate(45deg);
+  transform:rotate(40deg);
   opacity:.3;
   pointer-events:none;
   animation:fall linear infinite;;
@@ -107,6 +108,10 @@ body{
                 0 0 20px #ff00de, 
                 inset 0 0 15px #ff00de;
 }
+  /* .card:hover{
+    box-shadow: 0 20px 25px -5px #ff00de, 
+              0 10px 10px -5px #ff00de;
+  } */
  /* .card:hover {
   border: 3px solid #ff00de; */
 .card-text{
@@ -166,11 +171,17 @@ h1{
   margin-bottom: 0px;      /* Fixed the typo from 'bootom' */
   font-size: 65px;
 }
-   h4 {
+h4 {
   display: flex;
-  justify-content: center; /* Centers text horizontally */
-  margin-top: 0px;      /* Fixed the typo from 'bootom' */
-  font-size: 20px;
+  justify-content: center;
+  margin-top: 0px;
+  font-size: 30px;
+  height: 7vh;
+  font-family: 'DynaPuff', cursive;
+  color: #ff85a1; /* Sweet Pink */
+  text-shadow: 2px 2px 0px #fbb1bd;
+  /* font-family: 'Great Vibes', cursive; */
+  color: #d63384;
 }
 p{
   font-size:1rem;
@@ -295,7 +306,7 @@ const cards=[
  {t:"🤞 Promise Day", m:"I promise you that ill do my best to understand you ,to love you and only you in every universe.", g: gifs.promise},
  {t:"🤗 Hug Day", m:"I want to be the person whose hug gives you sakoon from all your problems, because you are that person for me", g: gifs.hug},
  {t:"💋 Kiss Day", m:"Your presence leaves warmth in my heart all day", g: gifs.kiss},
- {t:"❤️ Valentine’s Day", m:"any messaage for me ?", g: gifs.valentine}
+ {t:"❤️ Valentine’s Day", m:"Any messaage for me ?", g: gifs.valentine}
 ];
 
 let index=0,startX=0;
@@ -307,7 +318,7 @@ function createHeartPop() {
   for(let i=0; i<3; i++) {
     const heart = document.createElement("div");
     heart.className = "heart-pop";
-    heart.innerHTML = ["❤️","💖","💝","🌸","✨","❤️‍🔥","🧸"][Math.floor(Math.random()*7)];
+    heart.innerHTML = ["❤️","🔥","💖","💘","✨","🌹","❤️‍🩹","💓","🫶","💎"][Math.floor(Math.random()*10)];
     heart.style.left = (Math.random() * 80 + 10) + "vw";
     heart.style.top = "80vh";
     heart.style.animationDelay = (i * 0.2) + "s";
@@ -334,7 +345,7 @@ function handleNo(step) {
 
 function render(){
   const c=cards[index];
-  let html=`<h4>---->swipe left <----</h4><img src="${c.g}" class="card-gif" alt="cute animation">`;
+  let html=`<h4>swipe miss</h4><img src="${c.g}" class="card-gif" alt="cute animation">`;
   
   if(c.t.includes("Propose")) {
     html = `<div class="ring-container"><div class="ring"></div></div>` + html;
@@ -398,7 +409,7 @@ setInterval(()=>{
   p.style.animationDuration=10+Math.random()*10+"s";
   document.body.appendChild(p);
   setTimeout(()=>p.remove(),10000);
-},3000);
+},1000);
 </script>
 
 <script type="module">
@@ -435,6 +446,7 @@ window.saveOnline = async function(){
 
 </body>
 </html>
+
 
 
 
