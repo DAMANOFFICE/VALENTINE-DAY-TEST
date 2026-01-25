@@ -445,19 +445,45 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// We attach it to window so the HTML button can find it
 window.saveOnline = async function(){
-  const text=document.getElementById("userMessage").value.trim();
+  const textInput = document.getElementById("userMessage");
+  const text = textInput.value.trim();
+
+  // This is the part that checks if it's empty
   if(!text){
-    Swal.fire({ text: "madam kush likh taan do ! ❤️", icon: 'warning' });
-    return;
+    Swal.fire({
+      title: 'Wait! ❤️',
+      text: "Madam, kush likh taan lo pehla!",
+      icon: 'info',
+      confirmButtonText: 'Theek aa'
+    });
+    return; // Stops the function here
   }
+
   try {
-    await addDoc(collection(db,"messages"),{message:text,time:serverTimestamp()});
-    Swal.fire({ title: 'Success!', text: "chl gya ji message ! ❤️", icon: 'success' });
-    document.getElementById("userMessage").value="";
+    await addDoc(collection(db,"messages"),{
+        message: text,
+        time: serverTimestamp()
+    });
+    
+    Swal.fire({
+      title: 'Bhej dita! ❤️',
+      text: "Chl gya ji message safely!",
+      icon: 'success',
+      timer: 3000
+    });
+    
+    textInput.value = ""; // Clear the box
     closeModal();
+    
   } catch(e) {
-    Swal.fire({ text: "Sent! (net da issue maybe thoda )", icon: 'info' });
+    console.error("Error adding document: ", e);
+    // Fallback if there is a connection error
+    Swal.fire({
+      text: "Sent! (Net issue lagda par try ho gya)",
+      icon: 'info'
+    });
     closeModal();
   }
 };
