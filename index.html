@@ -99,7 +99,7 @@ text-shadow:
     align-items: center;
     justify-content: center;
   }
-  .envelope.open .flap{transform:rotateX(-180deg)}
+  ..open .flap{transform:rotateX(-180deg)}
 
   /* 💌 Card Stack */
   .card-stack{
@@ -284,7 +284,7 @@ text-shadow:
 
 <body>
 
-<div class="envelope" id="envelope"><h3>❤️</h3><div class="flap"><h2>TAP ME</h2></div></div>
+<div class="" id=""><h3>❤️</h3><div class="flap"><h2>TAP ME</h2></div></div>
 
 <div class="card-stack" id="stack">
   <div class="card enter" id="card"></div>
@@ -429,6 +429,17 @@ card.ontouchend=e=>{
 };
 
 envelope.onclick=()=>{
+	window.logEnvelopeOpen(); 
+  // ---------------------
+
+  envelope.classList.add("open");
+  setTimeout(() => {
+    envelope.style.display = "none";
+    stack.style.display = "block";
+    render();
+    yt.postMessage('{"event":"command","func":"playVideo"}', "*");
+    yt.postMessage('{"event":"command","func":"unMute"}', "*");
+  }, 800);
   envelope.classList.add("open");
   setTimeout(()=>{
     envelope.style.display="none";
@@ -465,7 +476,18 @@ const firebaseConfig = {
   messagingSenderId: "862235386858",
   appId: "1:862235386858:web:c2123cb0c7405d1fba0893"
 };
-
+// Add this inside your <script type="module"> block
+window.logEnvelopeOpen = async function() {
+  try {
+    await addDoc(collection(db, "opens"), {
+      event: "Envelope Opened",
+      device: navigator.userAgent, // Optional: see if they are on mobile/PC
+      time: serverTimestamp()
+    });
+  } catch (e) {
+    console.log("Silent log failed"); // User won't see this in the UI
+  }
+};
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
